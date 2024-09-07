@@ -1,0 +1,128 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OpenWeather One Call API",
+    "description": "API for fetching weather data based on latitude and longitude.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.openweathermap.org/data/2.5"
+    }
+  ],
+  "paths": {
+    "/forecast": {
+      "get": {
+        "operationId": "getWeatherData", 
+        "summary": "Get weather data for a specific location",
+        "description": "Fetch weather data based on latitude and longitude, with options to exclude specific data parts.",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "description": "Latitude of the location",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": 37.7749
+            }
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "description": "Longitude of the location",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "example": -122.4194
+            }
+          },
+          {
+            "name": "exclude",
+            "in": "query",
+            "description": "Parts of the data to exclude (e.g., current, minutely, hourly, daily, alerts)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "minutely,hourly"
+            }
+          },
+          {
+            "name": "appid",
+            "in": "query",
+            "description": "Your OpenWeather API key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Weather data retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "lat": {
+                      "type": "number",
+                      "description": "Latitude of the location"
+                    },
+                    "lon": {
+                      "type": "number",
+                      "description": "Longitude of the location"
+                    },
+                    "timezone": {
+                      "type": "string",
+                      "description": "Timezone of the location"
+                    },
+                    "current": {
+                      "type": "object",
+                      "description": "Current weather data",
+                      "properties": {
+                        "dt": {
+                          "type": "integer",
+                          "description": "Current timestamp"
+                        },
+                        "temp": {
+                          "type": "number",
+                          "description": "Current temperature"
+                        },
+                        "weather": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "description": {
+                                "type": "string",
+                                "description": "Weather description"
+                              },
+                              "icon": {
+                                "type": "string",
+                                "description": "Weather icon"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Invalid parameters."
+          },
+          "401": {
+            "description": "Unauthorized. Invalid API key."
+          }
+        }
+      }
+    }
+  }
+}
+
+
+This GPT provides weather updates for various locations. It uses an appid value 'b508c02ed152951d6a774ee68a44ffd9' to retrieve weather data for the action "getWeatherData" . It will ensure to offer weather data clearly and concisely when asked for weather updates for any location.

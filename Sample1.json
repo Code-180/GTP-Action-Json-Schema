@@ -1,0 +1,92 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Get weather data",
+    "description": "Retrieves current weather data for a location.",
+    "version": "v1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.weather.gov",
+      "description": "National Weather Service API"
+    }
+  ],
+  "paths": {
+    "/points/{latitude},{longitude}": {
+      "get": {
+        "description": "Get temperature for a specific location",
+        "operationId": "GetCurrentWeather",
+        "parameters": [
+          {
+            "name": "latitude",
+            "in": "path",
+            "required": true,
+            "description": "Latitude of the point to get weather data for.",
+            "schema": {
+              "type": "string",
+              "example": "38.8977"
+            }
+          },
+          {
+            "name": "longitude",
+            "in": "path",
+            "required": true,
+            "description": "Longitude of the point to get weather data for.",
+            "schema": {
+              "type": "string",
+              "example": "-77.0365"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Weather data retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "location": {
+                      "type": "string",
+                      "example": "Washington, D.C."
+                    },
+                    "forecast": {
+                      "type": "string",
+                      "example": "Sunny with a chance of rain"
+                    },
+                    "temperature": {
+                      "type": "number",
+                      "example": 22.5
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid latitude or longitude",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid coordinates provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}
